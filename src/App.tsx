@@ -1,22 +1,10 @@
 import { createTheme, ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
-import CreatePlaylist from "../src/pages/create-playlist/";
+import CreatePlaylist from "./pages/createplaylist";
 import "./App.css";
 import store from "./redux/store";
-
-// declare module "@mui/material/styles" {
-//   interface Theme {
-//     typography: {
-//       fontFamily: string;
-//     };
-//   }
-
-//   interface ThemeOptions {
-//     typography?: {
-//       fontFamily: string;
-//     };
-//   }
-// }
+import RoutesPage from "../src/pages/routes";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   const theme = createTheme({
@@ -26,13 +14,13 @@ function App() {
   });
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <div className="App">
-          <CreatePlaylist />
-        </div>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Router>
+          <RoutesPage></RoutesPage>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 
