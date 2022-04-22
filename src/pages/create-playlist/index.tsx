@@ -9,6 +9,7 @@ import MusicCard from "../../components/MusicCard";
 import SignIn from "../../components/SignIn";
 import { tokenState } from "../../modules/stateReduxModule";
 import { Item } from "../../modules/trackModule";
+import PlaylistForm from "../../components/CreatePlaylist";
 
 const CreatePlaylist: FC = () => {
   const token = useSelector((state: tokenState) => state.token.value);
@@ -17,6 +18,10 @@ const CreatePlaylist: FC = () => {
   const [searchKey, setSearchKey] = useState("");
   const [selectedTracksId, setSelectedTracksId] = useState<Item[]>([]);
   const [combinedTracks, setCombinedTracks] = useState<Item[]>([]);
+  const [playlist, setPlaylist] = useState({
+    title: "",
+    description: "",
+  });
 
   const TokenHeader = () => {
     return {
@@ -61,11 +66,11 @@ const CreatePlaylist: FC = () => {
   };
 
   useEffect(() => {
-    const combinedTracksAndSelectedTracks = tracks.map((track: Item) => ({
+    const combinedTrackWithSelectedTrack = tracks.map((track: Item) => ({
       ...track,
       isSelected: selectedTracksId.find((t: Item) => t.uri === track.uri),
     }));
-    setCombinedTracks(combinedTracksAndSelectedTracks);
+    setCombinedTracks(combinedTrackWithSelectedTrack);
   }, [selectedTracksId, tracks]);
 
   const renderSearchSong = () =>
@@ -94,21 +99,71 @@ const CreatePlaylist: FC = () => {
       );
     });
 
+  const handlePlaylistChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+    setPlaylist({ ...playlist, [name]: value });
+  };
+
+  const handleCreatePlaylist = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const uris = selectedTracksId.map((item: Item) => item.uri);
+    console.log(uris);
+    axios
+      .get("https://api.spotify.com/v1/me", TokenHeader())
+      .then(function (response) {
+        axios
+          .post(
+            `https://api.spotify.com/v1/users/${response.data.id}/playlists`,
+            {
+              name: playlist.title,
+              description: playlist.description,
+              public: false,
+            },
+            TokenHeader()
+          )
+          .then(function (response) {
+            axios.post(
+              `https://api.spotify.com/v1/playlists/${response.data.id}/tracks`,
+              {
+                uris: uris,
+              },
+              TokenHeader()
+            );
+          });
+      });
+    alert("New Playlist added");
+  };
+
   return (
     <>
       {/* <Sidebar /> */}
       {/* sidebar must be responsive */}
-      <Container sx={{ mt: 1, mr: 3 }}>
-        <Grid>
-          <SignIn />
-          <Searchbar
-            handleSearchChange={handleSearchChange}
-            handleSearchSong={handleSearchSong}
-          />
+
+      <Container maxWidth="lg" sx={{ marginTop: 2 }}>
+        <SignIn />
+        <Grid
+          container
+          justifyContent="flex-start"
+          sx={{
+            marginTop: 4,
+          }}
+        >
+          <Grid item xs={8}>
+            <Searchbar
+              handleSearchChange={handleSearchChange}
+              handleSearchSong={handleSearchSong}
+            />
+            {tracks.length > 0 ? renderSearchSong() : null}
+          </Grid>
+          <Grid item xs={4}>
+            <PlaylistForm
+              playlist={playlist}
+              handleChange={handlePlaylistChange}
+              handleSubmit={handleCreatePlaylist}
+            />
+          </Grid>
         </Grid>
       </Container>
-      {tracks.length > 0 ? renderSearchSong() : <p>No song</p>}
-      {renderSelectedSongs()}
     </>
   );
 };
