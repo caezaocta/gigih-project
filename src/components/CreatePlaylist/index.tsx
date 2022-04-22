@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Card, Button, TextField } from "@mui/material";
+import { Button, Card, TextField } from "@mui/material";
 
 interface CreatePlaylistProps {
   handleSubmit(e: React.FormEvent<HTMLFormElement>): void;
@@ -18,6 +17,7 @@ const CreatePlaylist = ({
   return (
     <>
       <Card sx={{ padding: 2 }}>
+        <h3>Create Playlist</h3>
         <form onSubmit={handleSubmit}>
           <div>
             <TextField
@@ -27,10 +27,8 @@ const CreatePlaylist = ({
               onChange={handleChange}
               id="playlist-title"
               name="title"
-              aria-describedby="emailHelp"
               placeholder="Enter your playlist title"
               value={playlist.title}
-              // minLength={10}
               sx={{ minLength: 10 }}
               inputProps={{
                 minLength: 10,

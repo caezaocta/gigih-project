@@ -1,15 +1,15 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Searchbar from "../../components/Searchbar";
-// import Sidebar from '../../components/Sidebar';
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import PlaylistForm from "../../components/CreatePlaylist";
 import MusicCard from "../../components/MusicCard";
+import Searchbar from "../../components/Searchbar";
+// import Sidebar from "../../components/Sidebar";
 import SignIn from "../../components/SignIn";
 import { tokenState } from "../../modules/stateReduxModule";
 import { Item } from "../../modules/trackModule";
-import PlaylistForm from "../../components/CreatePlaylist";
 
 const CreatePlaylist: FC = () => {
   const token = useSelector((state: tokenState) => state.token.value);
@@ -86,18 +86,18 @@ const CreatePlaylist: FC = () => {
       );
     });
 
-  const renderSelectedSongs = () =>
-    selectedTracksId.map((item: Item) => {
-      const { uri } = item;
-      return (
-        <MusicCard
-          key={uri}
-          track={item}
-          onTrackItemClick={onTrackItemClick}
-          selectedList={true}
-        />
-      );
-    });
+  // const renderSelectedSongs = () =>
+  //   selectedTracksId.map((item: Item) => {
+  //     const { uri } = item;
+  //     return (
+  //       <MusicCard
+  //         key={uri}
+  //         track={item}
+  //         onTrackItemClick={onTrackItemClick}
+  //         selectedList={true}
+  //       />
+  //     );
+  //   });
 
   const handlePlaylistChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;

@@ -1,10 +1,7 @@
 import { createTheme, ThemeProvider } from "@mui/material";
-import { Provider } from "react-redux";
-import CreatePlaylist from "./pages/createplaylist";
-import "./App.css";
-import store from "./redux/store";
-import RoutesPage from "../src/pages/routes";
 import { BrowserRouter as Router } from "react-router-dom";
+import RoutesPage from "../src/pages/routes";
+import "./App.css";
 
 function App() {
   const theme = createTheme({

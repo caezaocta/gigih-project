@@ -11,6 +11,9 @@
 # production
 /build
 
+# spotify
+.env
+
 # misc
 .DS_Store
 .env.local

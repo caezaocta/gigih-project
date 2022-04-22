@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux'
+import './index.css';
 import store from "./redux/store";
 
 const rootElement = document.getElementById('root')

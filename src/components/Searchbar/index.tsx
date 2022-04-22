@@ -9,6 +9,7 @@ interface SearchBarProps {
 function SearchBar({ handleSearchChange, handleSearchSong }: SearchBarProps) {
   return (
     <>
+      <h3>Search Song</h3>
       <form onSubmit={handleSearchSong}>
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
           <SearchIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />

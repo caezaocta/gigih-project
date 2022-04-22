@@ -1,16 +1,15 @@
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import {
-  IconButton,
+  Box,
   Button,
   Card,
   CardContent,
   CardMedia,
-  Grid,
+  IconButton,
   Typography,
-  Box,
 } from "@mui/material";
 import { Item } from "../../modules/trackModule";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 
 interface MusicCardProps {
   track: Item;
